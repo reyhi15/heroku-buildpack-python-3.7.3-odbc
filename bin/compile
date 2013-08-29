@@ -15,9 +15,13 @@ export GARRETT="THIS IS WHERE IS I AND WAS"
 
 # Paths.
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
+echo "-----> BIN_DIR: $BIN_DIR"
 ROOT_DIR=$(dirname $BIN_DIR)
+echo "-----> ROOT_DIR: $ROOT_DIR"
 BUILD_DIR=$1
+echo "-----> BUILD_DIR: $BUILD_DIR"
 CACHE_DIR=$2
+echo "-----> CACHE_DIR: $CACHE_DIR"
 
 CACHED_DIRS=".heroku"
 
