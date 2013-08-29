@@ -1,22 +1,5 @@
 #!/usr/bin/env bash
 
-echo "-----> Installing unixODBC"
-
-S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
-UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
-UNIX_ODBC_DIR="$0/vendor/unixodbc"
-
-echo "----->" $0
-echo "----->" $UNIX_ODBC_DIR
-echo "----->" $UNIX_ODBC_WITH_HANA_TGZ
-
-echo `mkdir -p $UNIX_ODBC_DIR`
-echo `curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - `
-
-if [[ $? != 0 ]] ; then
-    echo "-----> ERROR!"
-fi
-
 if [ -f bin/pre_compile ]; then
     echo "-----> Running pre-compile hook"
     chmod +x bin/pre_compile
