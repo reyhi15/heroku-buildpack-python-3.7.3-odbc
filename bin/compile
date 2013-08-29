@@ -127,7 +127,11 @@ bpwatch start restore_cache
   done
 bpwatch stop restore_cache
 
-# Before we get into python, we need ODBC
+# # # # # # # # # # # # #
+# BEGIN CUSTOM ADDITIONS
+# # # # # # # # # # # # #
+
+# Before we get into python, lets get unixODBC
 echo "-----> Installing unixODBC"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
@@ -136,19 +140,26 @@ UNIX_ODBC_DIR="$ROOT_DIR/vendor/unixodbc"
 
 export UNIX_ODBC_DIR
 
-echo "----->" $ROOT_DIR
-echo "----->" $UNIX_ODBC_DIR
-echo "----->" $UNIX_ODBC_WITH_HANA_TGZ
-
 mkdir -p $UNIX_ODBC_DIR
 curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
 
-if [[ $? != 0 ]] ; then
-    echo "-----> ERROR!"
-fi
+# Before we get into python, lets get FreeTDS
+echo "-----> Installing FreeTDS"
+FREETDS_DIR="$ROOT_DIR/vendor/freetds"
 
+mkdir -p $FREETDS_DIR
+curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -o - | tar -xz -C $FREETDS_DIR -f -
 
+LD_LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
+LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
+CPPATH="$ROOT_DIR/vendor/freetds/include:$CPPATH"
+CPATH="$ROOT_DIR/vendor/freetds/include:$CPATH"
 
+export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH
+
+# # # # # # # # # # # #
+# END CUSTOM ADDITIONS
+# # # # # # # # # # # #
 
 set +e
 # Create set-aside `.heroku` folder.
