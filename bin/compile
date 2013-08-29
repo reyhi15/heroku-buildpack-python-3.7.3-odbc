@@ -126,9 +126,9 @@ echo "-----> Installing unixODBC"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
-UNIX_ODBC_DIR="$0/vendor/unixodbc"
+UNIX_ODBC_DIR="$1/vendor/unixodbc"
 
-echo "----->" $0
+echo "----->" $1
 echo "----->" $UNIX_ODBC_DIR
 echo "----->" $UNIX_ODBC_WITH_HANA_TGZ
 
