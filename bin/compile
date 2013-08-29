@@ -123,40 +123,6 @@ bpwatch start restore_cache
   done
 bpwatch stop restore_cache
 
-# # # # # # # # # # # # #
-# BEGIN CUSTOM ADDITIONS
-# # # # # # # # # # # # #
-
-# Before we get into python, lets get unixODBC
-echo "-----> Installing unixODBC"
-
-S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
-UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
-UNIX_ODBC_DIR="$ROOT_DIR/vendor/unixodbc"
-
-export UNIX_ODBC_DIR
-
-mkdir -p $UNIX_ODBC_DIR
-curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
-
-# Before we get into python, lets get FreeTDS
-echo "-----> Installing FreeTDS"
-FREETDS_DIR="$ROOT_DIR/vendor/freetds"
-
-mkdir -p $FREETDS_DIR
-curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -s -o - | tar -xz -C $FREETDS_DIR -f -
-
-LD_LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
-LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
-CPPATH="$ROOT_DIR/vendor/freetds/include:$CPPATH"
-CPATH="$ROOT_DIR/vendor/freetds/include:$CPATH"
-
-export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH
-
-# # # # # # # # # # # #
-# END CUSTOM ADDITIONS
-# # # # # # # # # # # #
-
 set +e
 # Create set-aside `.heroku` folder.
 mkdir .heroku &> /dev/null
@@ -201,6 +167,47 @@ if [ ! "$SKIP_INSTALL" ]; then
 else
   puts-step "Using Python runtime ($PYTHON_VERSION)"
 fi
+
+
+# # # # # # # # # # # # #
+# BEGIN CUSTOM ADDITIONS
+# # # # # # # # # # # # #
+
+VENDOR_DIR="$APP_DIR/.heroku/vendor"
+
+export VENDOR_DIR
+
+mkdir -p $VENDOR_DIR
+
+# Before we get into pip, lets get unixODBC
+echo "-----> Installing unixODBC"
+
+S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
+UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
+UNIX_ODBC_DIR="$VENDOR_DIR/vendor/unixodbc"
+
+export UNIX_ODBC_DIR
+
+mkdir -p $UNIX_ODBC_DIR
+curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
+
+# Before we get into pip, lets get FreeTDS
+echo "-----> Installing FreeTDS"
+FREETDS_DIR="$VENDOR_DIR/vendor/freetds"
+
+mkdir -p $FREETDS_DIR
+curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -s -o - | tar -xz -C $FREETDS_DIR -f -
+
+LD_LIBRARY_PATH="$VENDOR_DIR/vendor/freetds/lib:$LIBRARY_PATH"
+LIBRARY_PATH="$VENDOR_DIR/vendor/freetds/lib:$LIBRARY_PATH"
+CPPATH="$VENDOR_DIR/vendor/freetds/include:$CPPATH"
+CPATH="$VENDOR_DIR/vendor/freetds/include:$CPATH"
+
+export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH
+
+# # # # # # # # # # # #
+# END CUSTOM ADDITIONS
+# # # # # # # # # # # #
 
 
 # If Pip isn't up to date:
