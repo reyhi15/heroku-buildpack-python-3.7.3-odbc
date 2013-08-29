@@ -186,6 +186,9 @@ S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
 UNIX_ODBC_DIR="$VENDOR_DIR/unixodbc"
 
+LD_LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
+LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
+
 export UNIX_ODBC_DIR
 
 mkdir -p $UNIX_ODBC_DIR
