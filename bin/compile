@@ -15,13 +15,9 @@ export GARRETT="THIS IS WHERE IS I AND WAS"
 
 # Paths.
 BIN_DIR=$(cd $(dirname $0); pwd) # absolute path
-echo "-----> BIN_DIR: $BIN_DIR"
 ROOT_DIR=$(dirname $BIN_DIR)
-echo "-----> ROOT_DIR: $ROOT_DIR"
 BUILD_DIR=$1
-echo "-----> BUILD_DIR: $BUILD_DIR"
 CACHE_DIR=$2
-echo "-----> CACHE_DIR: $CACHE_DIR"
 
 CACHED_DIRS=".heroku"
 
@@ -148,7 +144,7 @@ echo "-----> Installing FreeTDS"
 FREETDS_DIR="$ROOT_DIR/vendor/freetds"
 
 mkdir -p $FREETDS_DIR
-curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -o - | tar -xz -C $FREETDS_DIR -f -
+curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -s -o - | tar -xz -C $FREETDS_DIR -f -
 
 LD_LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
 LIBRARY_PATH="$ROOT_DIR/vendor/freetds/lib:$LIBRARY_PATH"
