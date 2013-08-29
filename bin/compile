@@ -184,7 +184,7 @@ echo "-----> Installing unixODBC"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
-UNIX_ODBC_DIR="$VENDOR_DIR/vendor/unixodbc"
+UNIX_ODBC_DIR="$VENDOR_DIR/unixodbc"
 
 export UNIX_ODBC_DIR
 
@@ -193,7 +193,7 @@ curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f -
 
 # Before we get into pip, lets get FreeTDS
 echo "-----> Installing FreeTDS"
-FREETDS_DIR="$VENDOR_DIR/vendor/freetds"
+FREETDS_DIR="$VENDOR_DIR/freetds"
 
 mkdir -p $FREETDS_DIR
 curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -s -o - | tar -xz -C $FREETDS_DIR -f -
