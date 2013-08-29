@@ -182,8 +182,8 @@ mkdir -p $VENDOR_DIR
 # Before we get into pip, lets get unixODBC
 echo "-----> Installing unixODBC"
 
-S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
-UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
+S3BUCKET="https://s3.amazonaws.com/film42"
+UNIX_ODBC_HANA_URL="$S3BUCKET/unixodbc.tar.gz"
 UNIX_ODBC_DIR="$VENDOR_DIR/unixodbc"
 
 LD_LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
@@ -192,14 +192,15 @@ LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
 export UNIX_ODBC_DIR
 
 mkdir -p $UNIX_ODBC_DIR
-curl $UNIX_ODBC_WITH_HANA_TGZ -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
+curl $UNIX_ODBC_HANA_URL -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
 
 # Before we get into pip, lets get FreeTDS
 echo "-----> Installing FreeTDS"
+FREETDS_URL="$S3BUCKET/freetds.tar.gz"
 FREETDS_DIR="$VENDOR_DIR/freetds"
 
 mkdir -p $FREETDS_DIR
-curl https://s3.amazonaws.com/firmhouse/freetds-0.tgz -s -o - | tar -xz -C $FREETDS_DIR -f -
+curl $FREETDS_URL -s -o - | tar -xz -C $FREETDS_DIR -f -
 
 LD_LIBRARY_PATH="$VENDOR_DIR/freetds/lib:$LIBRARY_PATH"
 LIBRARY_PATH="$VENDOR_DIR/freetds/lib:$LIBRARY_PATH"
