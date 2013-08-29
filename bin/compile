@@ -56,7 +56,7 @@ bpwatch start compile
 
 
 # We'll need to send these statics to other scripts we `source`.
-export BUILD_DIR CACHE_DIR BIN_DIR PROFILE_PATH
+export BUILD_DIR CACHE_DIR BIN_DIR PROFILE_PATH ROOT_DIR
 
 # Syntax sugar.
 source $BIN_DIR/utils
@@ -132,9 +132,11 @@ echo "-----> Installing unixODBC"
 
 S3BUCKET="https://s3.amazonaws.com/chameleon-heroku-assets"
 UNIX_ODBC_WITH_HANA_TGZ="$S3BUCKET/unixodbc.tar.gz"
-UNIX_ODBC_DIR="$1/vendor/unixodbc"
+UNIX_ODBC_DIR="$ROOT_DIR/vendor/unixodbc"
 
-echo "----->" $1
+export UNIX_ODBC_DIR
+
+echo "----->" $ROOT_DIR
 echo "----->" $UNIX_ODBC_DIR
 echo "----->" $UNIX_ODBC_WITH_HANA_TGZ
 
