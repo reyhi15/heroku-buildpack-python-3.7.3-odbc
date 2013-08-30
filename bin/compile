@@ -274,8 +274,10 @@ bpwatch stop collectstatic
 # ### Finalize
 #
 
+echo "-----> CHECKING PATH: " $PATH 
+
 # Set context environment variables.
-set-env PATH '$HOME/.heroku/python/bin:$PATH'
+#set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
 set-default-env PATH '$HOME/.heroku/python/bin:$PATH'
