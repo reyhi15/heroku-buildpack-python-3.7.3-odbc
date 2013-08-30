@@ -191,7 +191,7 @@ PATH="$VENDOR_DIR/unixodbc/bin:$PATH"
 mkdir -p $UNIX_ODBC_DIR
 curl $UNIX_ODBC_HANA_URL -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
 
-export UNIX_ODBC_DIR LD_LIBRARY_PATH LIBRARY_PATH
+export UNIX_ODBC_DIR LD_LIBRARY_PATH LIBRARY_PATH PATH
 
 # Before we get into pip, lets get FreeTDS
 echo "-----> Installing FreeTDS"
@@ -207,7 +207,7 @@ PATH="$VENDOR_DIR/freetds/bin:$PATH"
 CPPATH="$VENDOR_DIR/freetds/include:$CPPATH"
 CPATH="$VENDOR_DIR/freetds/include:$CPATH"
 
-export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH
+export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH PATH
 
 # # # # # # # # # # # #
 # END CUSTOM ADDITIONS
@@ -278,6 +278,7 @@ bpwatch stop collectstatic
 set-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
+set-default-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-default-env LIBRARY_PATH $LIBRARY_PATH
 set-default-env LD_LIBRARY_PATH $LD_LIBRARY_PATH
 set-default-env LANG en_US.UTF-8
