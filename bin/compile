@@ -186,12 +186,12 @@ UNIX_ODBC_DIR="$VENDOR_DIR/unixodbc"
 
 LD_LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
 LIBRARY_PATH="$VENDOR_DIR/unixodbc/lib:$LIBRARY_PATH"
-PATH="$VENDOR_DIR/unixodbc/bin:$PATH"
+PLUGIN_PATH="$VENDOR_DIR/unixodbc/bin:$PLUGIN_PATH"
 
 mkdir -p $UNIX_ODBC_DIR
 curl $UNIX_ODBC_HANA_URL -s -o - | tar -xz -C $UNIX_ODBC_DIR -f - 
 
-export UNIX_ODBC_DIR LD_LIBRARY_PATH LIBRARY_PATH PATH
+export UNIX_ODBC_DIR LD_LIBRARY_PATH LIBRARY_PATH PLUGIN_PATH
 
 # Before we get into pip, lets get FreeTDS
 echo "-----> Installing FreeTDS"
@@ -203,11 +203,11 @@ curl $FREETDS_URL -s -o - | tar -xz -C $FREETDS_DIR -f -
 
 LD_LIBRARY_PATH="$VENDOR_DIR/freetds/lib:$LIBRARY_PATH"
 LIBRARY_PATH="$VENDOR_DIR/freetds/lib:$LIBRARY_PATH"
-PATH="$VENDOR_DIR/freetds/bin:$PATH"
+PLUGIN_PATH="$VENDOR_DIR/freetds/bin:$PLUGIN_PATH"
 CPPATH="$VENDOR_DIR/freetds/include:$CPPATH"
 CPATH="$VENDOR_DIR/freetds/include:$CPATH"
 
-export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH PATH
+export FREETDS_DIR LD_LIBRARY_PATH LIBRARY_PATH CPPATH CPATH PLUGIN_PATH
 
 # # # # # # # # # # # #
 # END CUSTOM ADDITIONS
@@ -277,10 +277,9 @@ bpwatch stop collectstatic
 echo "-----> CHECKING PATH: " $PATH 
 
 # Set context environment variables.
-#set-env PATH '$HOME/.heroku/python/bin:$PATH'
+set-env PATH '$HOME/.heroku/python/bin:$PATH:$PLUGIN_PATH'
 set-env PYTHONUNBUFFERED true
 set-env PYTHONHOME /app/.heroku/python
-set-default-env PATH '$HOME/.heroku/python/bin:$PATH'
 set-default-env LIBRARY_PATH $LIBRARY_PATH
 set-default-env LD_LIBRARY_PATH $LD_LIBRARY_PATH
 set-default-env LANG en_US.UTF-8
